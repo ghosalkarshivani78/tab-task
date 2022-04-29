@@ -1,0 +1,233 @@
+﻿@model tasktab.Models.AllAccess 
+
+<div id="usertable">
+@if (Model.add)
+{
+<button onclick="access()">Create New</button>
+}
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                 Role
+            </th>
+            <th>
+                Description
+            </th>
+            <th>Useraccessid</th>
+            <th>Modulename</th>
+            <th>Add</th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+<tbody>
+@foreach (var i in Model.manaeModule)
+{ 
+    <tr>
+        <td>@Html.DisplayFor(modelItem => i.id)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.role)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.description)
+        </td>
+        <td>@Html.DisplayFor(modelItem =>i.useraccessid)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.modulename)
+        </td>
+        <td>@Html.CheckBoxFor(modelItem => i.isadd, new { @onchange = "adddata(this.checked,"+@i.id+")" })
+        </td>
+        <td>@Html.CheckBoxFor(modelItem => i.isedit, new { @onchange = "editdata(this.checked,"+@i.id+")" })
+        </td>
+        <td>@Html.CheckBoxFor(modelItem => i.isdelete, new { @onchange = "deletedata(this.checked,"+@i.id+")" })
+        </td>
+    @*    <td>
+            <button type="button" onclick="edit(@i.id)" class="btn btn-success">
+             Edit
+            </button>
+        </td>
+        <td>
+        
+        <button class="btn btn-danger" onclick="Delete(@i.id)">Delete</button>*@
+
+          @*  <button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", "Home", new { @id = i.id }, null)</button>*@
+        @*</td>*@
+</tr>
+
+}
+@*<tr>
+<td><input type="submit" id="exportable" class="button" value="Print" /></td>
+</tr>*@
+</tbody>
+    
+</table>
+</div>
+
+<div id="usercreate">
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTable").dataTable();
+    })
+    //FOR loading createpartial 
+    function access() {
+        debugger;
+        $.ajax({
+            url: '/manage/Create',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(data);
+                $("#usercreate").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+
+       function editdata(item,id) {
+    debugger;
+
+    var checked = confirm("Are you sure you want to Edit?");
+    if (checked) {
+        $.ajax({
+            url: '/manage/editcheckboxupdate',
+            method: 'GET',
+            dataType: 'json',
+            data: { id:id,isedit: item},
+            success: function (data) {
+                debugger;
+                manage();
+
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+
+            }
+        });
+    }
+        }
+
+
+
+        function adddata(item,id) {
+            var checked = confirm("Are you sure You want to Add ?");
+            if (checked) {
+                $.ajax({
+                    url: '/manage/addcheckboxupdate',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: { id: id, isadd: item },
+                    success: function (data) {
+                        debugger;
+                        manage();
+
+                    },
+                    error: function (error) {
+                        debugger;
+                        //$("#usertable").hide();
+
+                    }
+                });
+            }
+
+            }
+
+
+
+            function deletedata(item, id) 
+            {
+                 var checked = confirm("Are you sure You want To Delete?");
+                 if (checked) {
+                     $.ajax({
+                         url: '/manage/deletecheckboxupdate',
+                         method: 'GET',
+                         dataType: 'json',
+                         data: { id: id, isdelete: item },
+                         success: function (data) {
+                             debugger;
+                             manage();
+
+                         },
+                         error: function (error) {
+                             debugger;
+                             //$("#usertable").hide();
+
+                         }
+                     });
+                 }
+             }
+         
+          
+
+
+    //FOR loading editpartial 
+    function edit(id) {
+        $.ajax({
+            url: '/manage/Edit',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(data);
+                $("#usercreate").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+
+    }
+
+
+    function Delete(id) {
+        $.ajax({
+            url: '/manage/Delete',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                contact();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+</script>

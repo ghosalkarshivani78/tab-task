@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities14">
+    <EntitySetMapping Name="cities">
+      <EntityTypeMapping TypeName="testModel.city">
+        <MappingFragment StoreEntitySet="city">
+          <ScalarProperty Name="cityid" ColumnName="cityid" />
+          <ScalarProperty Name="cityname" ColumnName="cityname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="testModel.country">
+        <MappingFragment StoreEntitySet="country">
+          <ScalarProperty Name="countryid" ColumnName="countryid" />
+          <ScalarProperty Name="countryname" ColumnName="countryname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="logins">
+      <EntityTypeMapping TypeName="testModel.login">
+        <MappingFragment StoreEntitySet="login">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ruletaxes">
+      <EntityTypeMapping TypeName="testModel.ruletax">
+        <MappingFragment StoreEntitySet="ruletax">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="taxname" ColumnName="taxname" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="levels" ColumnName="levels" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="useraccesses">
+      <EntityTypeMapping TypeName="testModel.useraccess">
+        <MappingFragment StoreEntitySet="useraccess">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="useraccessscrens">
+      <EntityTypeMapping TypeName="testModel.useraccessscren">
+        <MappingFragment StoreEntitySet="useraccessscren">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="modulename" ColumnName="modulename" />
+          <ScalarProperty Name="useraccessid" ColumnName="useraccessid" />
+          <ScalarProperty Name="adddata" ColumnName="adddata" />
+          <ScalarProperty Name="editdata" ColumnName="editdata" />
+          <ScalarProperty Name="deletedata" ColumnName="deletedata" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usercities">
+      <EntityTypeMapping TypeName="testModel.usercity">
+        <MappingFragment StoreEntitySet="usercity">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="cityid" ColumnName="cityid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usercontacts">
+      <EntityTypeMapping TypeName="testModel.usercontact">
+        <MappingFragment StoreEntitySet="usercontact">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="userinfoes">
+      <EntityTypeMapping TypeName="testModel.userinfo">
+        <MappingFragment StoreEntitySet="userinfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="roleid" ColumnName="roleid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

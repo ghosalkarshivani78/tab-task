@@ -1,0 +1,105 @@
+﻿@model tasktab.Models.contact
+           
+<style>
+.error
+{
+    color:Red;
+    }
+
+</style>
+
+<div class="Container">
+@*<form action="@Url.Action("Create", "contact")" method="post">*@
+<div class="form-row">
+<div class="form-group">
+<label>Name</label>
+@Html.TextBoxFor(x => x.name, new { @class="form-control"})
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Address</label>
+@Html.TextBoxFor(x => x.address, new { @class="form-control"})
+</div>
+
+<div class="form-group col-md-6">
+<label>City</label>
+ @Html.DropDownListFor(x => x.cityid, Model.cities1, new { @class = "form-control" })
+</div>
+</div>
+
+<div class="form-row">
+<div class="form-group">
+<label>Mobile Number</label>
+@Html.TextBoxFor(x => x.phone, new { @class="form-control"})
+</div>
+</div>
+
+
+
+<input type="button" class="btn btn-primary" id="insert" value="Insert"/>
+@*</form>*@
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#insert").on('click', function () {
+    debugger;
+      let name= $("#name").val();
+      let address=$("#address").val();
+      let phone=$("#phone").val();
+      let cityid=$("#cityid").val();
+
+      var uf =new Object;
+      uf.name=name;
+      uf.address=address;
+      uf.phone=phone;
+      uf.cityid=cityid;
+
+      $(".error").remove();
+
+        if(name=="")
+        {
+            $("#name").after('<span class="error">Enter Name</span>')
+        }
+        else if(address=="")
+        {
+            $("#address").after('<span class="error">Enter Adderss</span>')
+        }
+        else if(phone=="")
+        {
+            $("#phone").after('<span class="error">Enter Number</span>')
+        }
+        else if(phone !="" && phone.length != 10)
+        {   
+            $("#phone").after('<span class="error">Enter 10 Digit Number</span>')
+        }
+        else if(cityid=="")
+        {
+            $("#cityid").after('<span class="error">Enter City</span>')
+        }
+        else
+        {
+            $.ajax({
+                url: '/contact/Create',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (!data) {
+                        contact();
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+         }
+    })
+    })
+
+</script>
+
+

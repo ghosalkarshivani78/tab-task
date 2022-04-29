@@ -1,0 +1,5 @@
+C:\Users\shivani\Documents\Visual Studio 2010\Projects\tasktab\tasktab\bin\tasktab.dll
+C:\Users\shivani\Documents\Visual Studio 2010\Projects\tasktab\tasktab\bin\tasktab.pdb
+C:\Users\shivani\Documents\Visual Studio 2010\Projects\tasktab\tasktab\obj\Debug\tasktab.dll
+C:\Users\shivani\Documents\Visual Studio 2010\Projects\tasktab\tasktab\obj\Debug\tasktab.pdb
+C:\Users\shivani\Documents\Visual Studio 2010\Projects\tasktab\tasktab\obj\Debug\tasktab.csprojResolveAssemblyReference.cache

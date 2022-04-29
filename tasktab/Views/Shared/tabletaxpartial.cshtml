@@ -1,0 +1,140 @@
+﻿@model tasktab.Models.tax
+
+<style>
+.error
+{
+    color:Red;
+}
+
+</style>
+
+<div class="container">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Taxname</label>
+            @Html.TextBoxFor(x => x.taxname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Amount</label>
+            @Html.TextBoxFor(x => x.amount, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>Level</label>
+            <select class="form-control" id="levels">
+                <option value="Level1">Level1</option>
+                <option value="Level2">Level2</option>
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="form-row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" id="inserttax" value="Insert" style="margin-top: 25px;" />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item active"><a class="nav-link" id="level1-tab" data-toggle="tab" onclick="level('Level1')" href="#Level1" role="tab" aria-controls="level1" aria-selected="true">Level1</a> </li>
+        <li class="nav-item"><a class="nav-link" id="level2-tab" onclick="level('Level2')" data-toggle="tab" href="#Level2" role="tab" aria-controls="level2" aria-selected="false">level2</a> </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane" id="level1" role="tabpanel" aria-labelledby="home-tab">
+        </div>
+        @*<div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="profile-tab"></div>*@
+    </div>
+</div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        level('Level1');
+    })
+    //FOR loading createpartial 
+    function level(levels) {
+        debugger;
+        $.ajax({
+            url: '/tax/leveltablepartial',
+            method: 'GET',
+            dataType: 'json',
+            data:{level:levels},
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+
+                $("#level1").children().remove();
+                $("#level1").html(data);
+                $("#level1").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+               // $("#usertable").hide();
+                $("#level1").children().remove();
+                $("#level1").html(error.responseText);
+                $("#level1").show();
+            }
+        });
+    }
+
+
+    $("#inserttax").on('click', function () {
+       let taxname=$("#taxname").val();
+       let amount=$("#amount").val();
+       let levels=$("#levels").val();
+
+       var uf =new Object;
+       uf.taxname=taxname;
+       uf.amount=amount;
+       uf.levels=levels;
+
+       $(".error").remove();
+
+       if(taxname =="")
+       {
+        $("#taxname").after('<span class="error">Enter Taxname</span>')
+       }
+       if(amount==""){
+         $("#amount").after('<span class="error">Enter amount</span>')
+       }
+       else
+       {
+      $.ajax({
+                url: '/tax/Create',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (data=="Save") {
+                        $(".nav-tabs a[href='#"+levels+"']").tab("show");
+                       level(levels);
+                       emptyfield();
+                    }
+                    else{
+                     $("#email").after('<span class="error">Invalid</span>')
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+       }
+    })
+
+    function emptyfield()
+    {
+       $("#taxname").val('');
+       $("#amount").val('');
+       $("#levels").val('');
+    }
+</script>
+

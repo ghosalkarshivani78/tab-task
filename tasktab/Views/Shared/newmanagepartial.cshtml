@@ -1,0 +1,124 @@
+﻿@model tasktab.Models.manage
+
+
+ <style>
+.error
+{
+    color:Red;
+    }
+.Container
+{
+    margin-top:15px;
+    }
+</style>
+
+<div class="Container">
+@*<form action="@Url.Action("Create", "manage")" method="post">*@
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Role</label>
+@Html.TextBoxFor(x => x.role, new { @class = "form-control" })
+</div>
+
+<div class="form-group col-md-6">
+<label>Description</label>
+@Html.TextBoxFor(x => x.description, new { @class = "form-control" })
+</div>
+</div>
+
+<h4>Screen Access</h4>
+<input type="checkbox" value="User" id="User" />
+<label>User</label>
+<div class="form-group">
+   @Html.CheckBoxFor(x => x.userisadd)add
+     @Html.CheckBoxFor(x => x.userisedit)Edit
+      @Html.CheckBoxFor(x => x.userisdelete)Delete
+</div>
+
+<input type="checkbox" value="Contact" id="Contact" />
+<label>Contact</label>
+<div class="form-group">
+   @Html.CheckBoxFor(x => x.contactisadd)add
+     @Html.CheckBoxFor(x => x.contactisedit)Edit
+      @Html.CheckBoxFor(x => x.contactisdelete)Delete
+</div>
+
+<input type="checkbox" value="User Management" id="UserManager"/>
+
+<label>User Manager</label>
+<div class="form-group">
+   @Html.CheckBoxFor(x => x.usermanageisadd)add
+     @Html.CheckBoxFor(x => x.usermanageisedit)Edit
+      @Html.CheckBoxFor(x => x.usermanageisdelete)Delete
+</div>
+ <input type="button" id="insert" value="insert"/>
+
+@*</form*@
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $("#insert").on('click', function () {
+    debugger;
+      let role= $("#role").val();
+      let description=$("#description").val();
+
+      let userisadd=$("#userisadd:checked").val();
+      let userisedit=$("#userisedit:checked").val();
+      let userisdelete=$("#userisdelete:checked").val();
+    
+      let contactisadd=$("#contactisadd:checked").val();
+      let contactisedit=$("#contactisedit:checked").val();
+      let contactisdelete=$("#contactisdelete:checked").val();
+
+
+      let usermanageisadd=$("#usermanageisadd:checked").val();
+      let usermanageisedit=$("#usermanageisedit:checked").val();
+      let usermanageisdelete=$("#usermanageisdelete:checked").val();
+
+      let User=$("#User:checked").val();
+      let Contact=$("#Contact:checked").val();
+      let UserManager=$("#UserManager:checked").val();
+
+
+
+      var uf =new Object;
+      uf.role=role;
+      uf.description=description;
+      uf.userisadd=userisadd;
+      uf.userisedit=userisedit;
+      uf.userisdelete=userisdelete;
+
+      uf.contactisadd=contactisadd;
+      uf.contactisedit=contactisedit;
+      uf.contactisdelete=contactisdelete;
+
+      uf.usermanageisadd=usermanageisadd;
+      uf.usermanageisedit=usermanageisedit;
+      uf.usermanageisdelete=usermanageisdelete;
+
+      uf.User=User;
+      uf.Contact=Contact;
+      uf.UserManager=UserManager;
+
+
+        $.ajax({
+                url: '/manage/Create',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (data) {
+                        manage();
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+    })
+
+   })
+</script>

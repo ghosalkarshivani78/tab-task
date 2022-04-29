@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "city";
+}
+
+<h2>city</h2>
+@{
+    ViewBag.Title = "mainpage";
+}
+
+<h2>UserInfo</h2>
+<div class="container">
+ <!-- Nav tabs -->
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item active">
+    <a class="nav-link" id="home-tab" data-toggle="tab" onclick="load()" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+  </li>
+  
+  
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" onclick="contact()" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Profile</a>
+  </li>
+
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane" id="home" role="tabpanel" aria-labelledby="home-tab"></div>
+  @*<div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="profile-tab"></div>*@
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        load();
+
+        //$('#home').load('Url.Action("tablepartial","Home")');
+        //$('#myTable').dataTable();
+        //$('#emppar').load('Shared/empartial');
+
+    });
+
+    function load() {
+        $.ajax({
+            url: '/city/citytablepartial',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+                //$("#contact").hide();
+                $("#home").children().remove();
+                $("#home").html(data);
+                $("#home").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                // $("#contact").hide();
+                $("#home").children().remove();
+                $("#home").html(error.responseText);
+                $("#home").show();
+            }
+        });
+    }
+
+
+    function contact() {
+        debugger;
+        $.ajax({
+            url: '/contact/tablecontactpartial',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // $("#usertable").hide();
+                // $("#home").hide();
+                $("#home").children().remove();
+                $("#home").html(data);
+                $("#home").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                //$("#home").hide();
+                $("#home").children().remove();
+                $("#home").html(error.responseText);
+                $("#home").show();
+            }
+        });
+
+    }
+
+</script>

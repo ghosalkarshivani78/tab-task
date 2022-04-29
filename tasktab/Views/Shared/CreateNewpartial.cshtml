@@ -1,0 +1,129 @@
+﻿@model tasktab.Models.userform
+           
+<style>
+.error
+{
+    color:Red;
+}
+
+</style>
+
+<div class="Container">
+@*<form action="@Url.Action("Create","Home")" method="post">*@
+
+<div class="form-row">
+<div class="form-group">
+<label>Name</label>
+@Html.TextBoxFor(x => x.name, new { @class="form-control"})
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Email</label>
+@Html.TextBoxFor(x => x.email, new { @class="form-control"})
+</div>
+
+<div class="form-group col-md-6">
+<label>Password</label>
+@Html.TextBoxFor(x => x.password, new { @class="form-control"})
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Mobile Number</label>
+@Html.TextBoxFor(x => x.phone, new { @class="form-control"})
+</div>
+<div class="form-group col-md-6">
+<label>Role</label>
+@Html.DropDownListFor(x =>Model.roleid,Model.roles, new { @class="form-control"})
+</div>
+</div>
+
+<input type="button" class="btn btn-primary" id="insertuser" value="Insert" />
+@*</form>*@
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+var duplicate=false;
+    $("#insertuser").on('click', function () {
+    debugger;
+    let name=$("#name").val();
+    let email=$("#email").val();
+    let password=$("#password").val();
+    let phone=$("#phone").val();
+    let roleid=$("#roleid").val();
+
+
+    var uf=new Object;
+    uf.name=name;
+    uf.email=email;
+    uf.password=password;
+    uf.phone=phone;
+    uf.roleid=roleid;
+
+   
+
+    $(".error").remove();
+
+
+    var regEx = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+    
+   if(name=="")
+    {
+        $("#name").after('<span class="error">Enter Name</span>')
+    }
+    else if(email=="")
+    {
+        $("#email").after('<span class="error">Enter email</span>')
+    }
+    else if(!regEx.test(email))
+    {
+        $("#email").after('<span class="error">Invalid email</span>')
+    }
+    else if(password=="")
+    {
+        $("#password").after('<span class="error">Enter password</span>')
+    }
+    else if(password !="" && password.length!=6)
+    {
+    $("#password").after('<span class="error">password must be 6 character</span>')
+
+    }
+    else if(phone=="")
+    {
+        $("#phone").after('<span class="error">Enter Number</span>')
+    }
+    else if(phone !="" && phone.length !=10)
+    {
+        $("#phone").after('<span class="error">Enter 10 Digit Number</span>')
+    }
+ 
+    else
+    {
+      $.ajax({
+                url: '/Home/Create',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (data=="Save") {
+                        load();
+                    }
+                    else{
+                     $("#email").after('<span class="error"> Email Already Exist</span>')
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+    }
+         
+});
+     });
+
+</script>
+

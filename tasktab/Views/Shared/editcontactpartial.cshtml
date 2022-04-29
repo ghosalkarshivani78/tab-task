@@ -1,0 +1,98 @@
+﻿@model tasktab.Models.contact
+           
+<style>
+.error
+{
+   color:Red;
+}
+
+</style>
+
+<div class="Container">
+@*<form action="@Url.Action("Edit", "contact")" method="post">*@
+<div class="form-row">
+<div class="form-group">
+<label>Name</label>
+@Html.TextBoxFor(x => x.name, new { @class="form-control"})
+@Html.HiddenFor(x => x.id, new { @class="form-control"})
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Address</label>
+@Html.TextBoxFor(x => x.address, new { @class="form-control"})
+</div>
+
+<div class="form-group col-md-6">
+<label>City</label>
+ @Html.DropDownListFor(x => x.cityid, Model.cities1, new { @class = "form-control" })
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label>Number</label>
+@Html.TextBoxFor(x => x.phone, new { @class="form-control"})
+</div>
+</div>
+
+<input type="button" class="btn btn-primary" id="updatecontact" value="Update"/>
+@*</form>*@
+</div>
+
+<script type="text/javascript">
+    $("#updatecontact").on('click', function () {
+    debugger;
+    let name=$("#name").val();
+    let address=$("#address").val();
+    let phone=$("#phone").val();
+    let id=$("#id").val();
+    let cityid=$("#cityid").val();
+
+    var uf =new Object;
+    uf.id=id;
+    uf.name=name;
+    uf.address=address;
+    uf.phone=phone;
+    uf.cityid=cityid;
+
+    $(".error").remove();
+
+    if(name=="")
+    {
+        $("#name").after('<span class="error">Enter Name</span>')
+    }
+    else if(address=="")
+    {
+        $("#address").after('<span class="error">Enter Address</span>')
+    }
+    else if(phone=="")
+    {
+        $("#phone").after('<span class="error">Enter Number</span>')
+    }
+    else if(phone !="" && phone.length !=10)
+    {
+        $("#phone").after('<span class="error">Enter 10 Digit Number</span>')
+    }
+    else
+    {
+        $.ajax({
+                url: '/contact/Edit',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (!data) {
+                        contact();
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+    }
+
+})
+
+</script>

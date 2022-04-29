@@ -1,0 +1,159 @@
+﻿@model tasktab.Models.AllAccess
+
+
+<div id="usertable">
+@if (Model.add)
+{
+<button onclick="create()">Create New</button>
+ }
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                 Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+               Mobile Number
+            </th>
+            <th>City</th>
+            <th>
+                Edit
+            </th>
+            <th>
+                Delete
+            </th>
+        </tr>
+    </thead>
+<tbody>
+@foreach (var i in Model.contactModule)
+{ 
+    <tr>
+        <td>@Html.DisplayFor(modelItem => i.id)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.name)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.address)
+        </td>
+        <td>@Html.DisplayFor(modelItem => i.phone)
+        </td>
+         <td>@Html.DisplayFor(modelItem => i.cityid)
+        </td>
+        <td>
+        @if(Model.edit){
+            <button type="button" onclick="edit(@i.id)" class="btn btn-success">
+             Edit
+            </button>
+            }
+        </td>
+        <td>
+        @if (Model.delete)
+        {
+        <button class="btn btn-danger" onclick="Delete(@i.id)">Delete</button>
+        }
+          @*  <button class="btn btn-danger">@Html.ActionLink("Delete", "Delete", "Home", new { @id = i.id }, null)</button>*@
+        </td>
+</tr>
+
+}
+@*<tr>
+<td><input type="submit" id="exportable" class="button" value="Print" /></td>
+</tr>*@
+</tbody>
+    
+</table>
+</div>
+
+<div id="usercreate">
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#myTable").dataTable();
+    })
+//FOR loading createpartial 
+    function create() {
+        debugger;
+        $.ajax({
+            url: '/contact/Create',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(data);
+                $("#usercreate").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+    //FOR loading editpartial 
+    function edit(id) {
+        $.ajax({
+            url: '/contact/Edit',
+            method: 'GET',
+            data:{id:id},
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                // $("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(data);
+                $("#usercreate").show();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+
+    }
+
+
+    function Delete(id) {
+        $.ajax({
+            url: '/contact/Delete',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (data) {
+                debugger;
+                contact();
+            },
+            error: function (error) {
+                debugger;
+                //$("#usertable").hide();
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+
+  
+   
+
+</script>

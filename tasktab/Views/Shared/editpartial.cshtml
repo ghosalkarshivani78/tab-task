@@ -1,0 +1,123 @@
+﻿@model tasktab.Models.userform
+           
+<style>
+.error
+{
+    color:Red;
+}
+
+</style>
+
+<div class="Container">
+@*<form action="@Url.Action("Edit", "Home")" method="post">*@
+<div class="form-row">
+<div class="form-group">
+<label>Name</label>
+@Html.TextBoxFor(x => x.name, new { @class="form-control"})
+@Html.HiddenFor(x=>x.id)
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Email</label>
+@Html.TextBoxFor(x => x.email, new { @class="form-control"})
+</div>
+
+<div class="form-group col-md-6">
+<label>Password</label>
+@Html.TextBoxFor(x => x.password, new { @class="form-control"})
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-md-6">
+<label>Mobile Number</label>
+@Html.TextBoxFor(x => x.phone, new { @class="form-control"})
+</div>
+<div class="form-group col-md-6">
+<label>Role</label>
+@Html.DropDownListFor(x =>Model.roleid,Model.roles, new { @class="form-control"})
+</div>
+</div>
+
+<input type="button" value="Update" class="btn btn-primary" id="updateuser" />
+@*</form>*@
+</div>
+
+
+<script type="text/javascript">
+    var duplicate=false;
+    $("#updateuser").on('click', function () {
+    debugger;
+    let id=$("#id").val();
+    let name=$("#name").val();
+    let email=$("#email").val();
+    let password=$("#password").val();
+    let phone=$("#phone").val();
+     let roleid=$("#roleid").val();
+
+    
+    var uf=new Object;
+    uf.id=id;
+    uf.name=name;
+    uf.email=email;
+    uf.password=password;
+    uf.phone=phone;
+    uf.roleid=roleid;
+
+   
+    var regEx = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+
+   $(".error").remove();
+
+
+   if(name=="")
+   {
+        $("#name").after('<span class="error">Enter Name</span>')
+   }
+   else if(email=="")
+   {
+        $("#email").after('<span class="error">Enter Email</span>')
+   }
+   else if(!regEx.test(email))
+   {
+         $("#email").after('<span class="error">Invalid Email </span>')
+   }
+   else if(password=="")
+   {
+        $("#password").after('<span class="error">Enter Password</span>')
+   }
+   else if(password !="" && password.length != 6)
+   {
+        $("#password").after('<span class="error">Password Must be 6 Character</span>')
+   }
+    else if(phone=="")
+   {
+        $("#phone").after('<span class="error">Enter Number</span>')
+   }
+   else if(phone != "" && phone.length != 10)
+   {
+        $("#phone").after('<span class="error">Enter 10 Digit Number</span>')
+   }
+   else
+   {
+        $.ajax({
+                url: '/Home/Edit',
+                method: 'POST',
+                dataType: 'json',
+                data: uf,
+                success: function (data) {
+                    debugger;
+                    if (!data) {
+                        load();
+                    }
+                },
+                error: function (error) {
+                    debugger;
+                    alert("Error Occured");
+                }
+            });
+
+     }
+     })
+
+</script>

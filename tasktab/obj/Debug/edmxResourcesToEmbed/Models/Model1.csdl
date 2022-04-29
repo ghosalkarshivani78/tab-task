@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="testEntities14" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cities" EntityType="testModel.city" />
+    <EntitySet Name="countries" EntityType="testModel.country" />
+    <EntitySet Name="logins" EntityType="testModel.login" />
+    <EntitySet Name="ruletaxes" EntityType="testModel.ruletax" />
+    <EntitySet Name="useraccesses" EntityType="testModel.useraccess" />
+    <EntitySet Name="useraccessscrens" EntityType="testModel.useraccessscren" />
+    <EntitySet Name="usercities" EntityType="testModel.usercity" />
+    <EntitySet Name="usercontacts" EntityType="testModel.usercontact" />
+    <EntitySet Name="userinfoes" EntityType="testModel.userinfo" />
+    <AssociationSet Name="usercity_ibfk_1" Association="testModel.usercity_ibfk_1">
+      <End Role="city" EntitySet="cities" />
+      <End Role="usercity" EntitySet="usercities" />
+    </AssociationSet>
+    <AssociationSet Name="useraccessscren_ibfk_1" Association="testModel.useraccessscren_ibfk_1">
+      <End Role="useraccess" EntitySet="useraccesses" />
+      <End Role="useraccessscren" EntitySet="useraccessscrens" />
+    </AssociationSet>
+    <AssociationSet Name="userinfo_ibfk_1" Association="testModel.userinfo_ibfk_1">
+      <End Role="useraccess" EntitySet="useraccesses" />
+      <End Role="userinfo" EntitySet="userinfoes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="cityid" />
+    </Key>
+    <Property Name="cityid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cityname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="usercities" Relationship="testModel.usercity_ibfk_1" FromRole="city" ToRole="usercity" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="countryid" />
+    </Key>
+    <Property Name="countryid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="countryname" Type="String" Nullable="false" MaxLength="200" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="login">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="ruletax">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="taxname" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="amount" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="levels" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="useraccess">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="role" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="useraccessscrens" Relationship="testModel.useraccessscren_ibfk_1" FromRole="useraccess" ToRole="useraccessscren" />
+    <NavigationProperty Name="userinfoes" Relationship="testModel.userinfo_ibfk_1" FromRole="useraccess" ToRole="userinfo" />
+  </EntityType>
+  <EntityType Name="useraccessscren">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="modulename" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="useraccessid" Type="Int32" Nullable="false" />
+    <Property Name="adddata" Type="Boolean" />
+    <Property Name="editdata" Type="Boolean" />
+    <Property Name="deletedata" Type="Boolean" />
+    <NavigationProperty Name="useraccess" Relationship="testModel.useraccessscren_ibfk_1" FromRole="useraccessscren" ToRole="useraccess" />
+  </EntityType>
+  <EntityType Name="usercity">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="address" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="cityid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="city" Relationship="testModel.usercity_ibfk_1" FromRole="usercity" ToRole="city" />
+  </EntityType>
+  <EntityType Name="usercontact">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="address" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="userinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="roleid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="useraccess" Relationship="testModel.userinfo_ibfk_1" FromRole="userinfo" ToRole="useraccess" />
+  </EntityType>
+  <Association Name="usercity_ibfk_1">
+    <End Role="city" Type="testModel.city" Multiplicity="1" />
+    <End Role="usercity" Type="testModel.usercity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="cityid" />
+      </Principal>
+      <Dependent Role="usercity">
+        <PropertyRef Name="cityid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="useraccessscren_ibfk_1">
+    <End Role="useraccess" Type="testModel.useraccess" Multiplicity="1" />
+    <End Role="useraccessscren" Type="testModel.useraccessscren" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="useraccess">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="useraccessscren">
+        <PropertyRef Name="useraccessid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userinfo_ibfk_1">
+    <End Role="useraccess" Type="testModel.useraccess" Multiplicity="1" />
+    <End Role="userinfo" Type="testModel.userinfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="useraccess">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userinfo">
+        <PropertyRef Name="roleid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,76 @@
+﻿@model tasktab.Models.taxlist
+         
+<div id="usertable">
+<table class="table">
+<tr>
+<th>ID</th>
+<th>TaxName</th>
+<th>Amount</th>
+<th>Level</th>
+<th>Edit</th>
+<th>Delete</th>
+</tr>
+@foreach (var i in Model.taxModule) 
+{
+    <tr>
+    <td>@i.id</td>
+    <td>@i.taxname</td>
+    <td>@i.amount</td>
+    <td>@i.levels</td>
+    <td><button class="btn btn-success" onclick="edit(@i.id)">Edit</button></td>
+    <td><button class="btn btn-danger" onclick="deletedata(@i.id,'@i.levels')">Delete</button></td>
+    </tr>
+}
+</table>
+</div>  
+<div id="usercreate">
+</div>
+<script type="text/javascript">
+    function edit(id)
+    {
+        debugger;
+        $.ajax({
+            url: '/tax/Edit',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (data) {
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(data);
+                $("#usercreate").show();
+            },
+            error: function (error) {
+                debugger;
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+
+
+    function deletedata(id,levels)
+    {
+        debugger;
+        $.ajax({
+            url: '/tax/Delete',
+            method: 'GET',
+            data: { id: id },
+            dataType: 'json',
+            success: function (data) {
+              level(levels);
+            },
+            error: function (error) {
+                debugger;
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+</script>

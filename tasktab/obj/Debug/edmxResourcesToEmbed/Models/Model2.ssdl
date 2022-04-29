@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testModel1.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="testModel1StoreContainer">
+    <EntitySet Name="city" EntityType="testModel1.Store.city" store:Type="Tables" Schema="test" />
+    <EntitySet Name="country" EntityType="testModel1.Store.country" store:Type="Tables" Schema="test" />
+    <EntitySet Name="login" EntityType="testModel1.Store.login" store:Type="Tables" Schema="test" />
+    <EntitySet Name="screenmaster" EntityType="testModel1.Store.screenmaster" store:Type="Tables" Schema="test" />
+    <EntitySet Name="useraccess" EntityType="testModel1.Store.useraccess" store:Type="Tables" Schema="test" />
+    <EntitySet Name="useraccessscren" EntityType="testModel1.Store.useraccessscren" store:Type="Tables" Schema="test" />
+    <EntitySet Name="usercity" EntityType="testModel1.Store.usercity" store:Type="Tables" Schema="test" />
+    <EntitySet Name="usercontact" EntityType="testModel1.Store.usercontact" store:Type="Tables" Schema="test" />
+    <EntitySet Name="userinfo" EntityType="testModel1.Store.userinfo" store:Type="Tables" Schema="test" />
+    <AssociationSet Name="useraccessscren_ibfk_1" Association="testModel1.Store.useraccessscren_ibfk_1">
+      <End Role="useraccess" EntitySet="useraccess" />
+      <End Role="useraccessscren" EntitySet="useraccessscren" />
+    </AssociationSet>
+    <AssociationSet Name="usercity_ibfk_1" Association="testModel1.Store.usercity_ibfk_1">
+      <End Role="city" EntitySet="city" />
+      <End Role="usercity" EntitySet="usercity" />
+    </AssociationSet>
+    <AssociationSet Name="userinfo_ibfk_1" Association="testModel1.Store.userinfo_ibfk_1">
+      <End Role="useraccess" EntitySet="useraccess" />
+      <End Role="userinfo" EntitySet="userinfo" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="cityid" />
+    </Key>
+    <Property Name="cityid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="cityname" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="country">
+    <Key>
+      <PropertyRef Name="countryid" />
+    </Key>
+    <Property Name="countryid" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="countryname" Type="varchar" Nullable="false" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="login">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="password" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="screenmaster">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="modulename" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="useraccess">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="role" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="description" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="useraccessscren">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="modulename" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="useraccessid" Type="int" Nullable="false" />
+    <Property Name="adddata" Type="bit" />
+    <Property Name="editdata" Type="bit" />
+    <Property Name="deletedata" Type="bit" />
+  </EntityType>
+  <EntityType Name="usercity">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="address" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="phone" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="cityid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usercontact">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="address" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="phone" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="userinfo">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="email" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="password" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="phone" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="roleid" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="useraccessscren_ibfk_1">
+    <End Role="useraccess" Type="testModel1.Store.useraccess" Multiplicity="1" />
+    <End Role="useraccessscren" Type="testModel1.Store.useraccessscren" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="useraccess">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="useraccessscren">
+        <PropertyRef Name="useraccessid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="usercity_ibfk_1">
+    <End Role="city" Type="testModel1.Store.city" Multiplicity="1" />
+    <End Role="usercity" Type="testModel1.Store.usercity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="cityid" />
+      </Principal>
+      <Dependent Role="usercity">
+        <PropertyRef Name="cityid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="userinfo_ibfk_1">
+    <End Role="useraccess" Type="testModel1.Store.useraccess" Multiplicity="1" />
+    <End Role="userinfo" Type="testModel1.Store.userinfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="useraccess">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userinfo">
+        <PropertyRef Name="roleid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

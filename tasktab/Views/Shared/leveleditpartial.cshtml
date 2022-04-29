@@ -1,0 +1,84 @@
+﻿@model tasktab.Models.tax
+@{
+    ViewBag.Title = "leveleditpartial";
+}
+
+<h2>leveleditpartial</h2>
+<div class="container">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>
+                Taxname</label>
+            @Html.TextBoxFor(x => x.taxname, new { @class = "form-control", @id = "taxname1" })
+            @Html.HiddenFor(x => x.id)
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>
+                Amount</label>
+            @Html.TextBoxFor(x => x.amount, new { @class = "form-control", @id = "amount1" })
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>
+                Level</label>
+            <select class="form-control" id="levels1">
+                @if (Model.levels == "Level1")
+                {
+                    <option value="Level1" selected>Level1</option>
+                    <option value="Level2">Level2</option>
+                }
+                else
+                {
+                    <option value="Level1">Level1</option>
+                    <option value="Level2" selected>Level2</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <div class="form-row">
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" onclick="updatetax()" value="Update"
+                style="margin-top: 25px;" />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updatetax() {
+    debugger;
+       let id =$("#id").val();
+       let taxname=$("#taxname1").val();
+       let amount=$("#amount1").val();
+       let levels=$("#levels1").val();
+
+       var t =new Object;
+       t.id=id;
+       t.taxname=taxname;
+       t.amount=amount;
+       t.levels=levels;
+        
+        $.ajax({
+            url: '/tax/Edit',
+            method: 'POST',
+            data: t,
+            dataType: 'json',
+            success: function (data) {
+                 level(levels);
+            },
+            error: function (error) {
+                debugger;
+                $("#usertable").hide();
+                $("#usercreate").children().remove();
+                $("#usercreate").html(error.responseText);
+                $("#usercreate").show();
+            }
+        });
+    }
+
+
+</script>
+
